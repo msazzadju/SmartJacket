@@ -7,6 +7,8 @@ import os
 
 match_str_start = "**start_gps_camera**"
 match_str_stop = "**stop_gps_camera**"
+phone_number = '+8801760440736'
+wait_time = 60000
 
 camera_start_cmd = ""
 camera_stop_cmd = ""
@@ -42,7 +44,6 @@ while True:
             gps_pos = gps_c.get_gps_position()
             print("Retrying to fetch GPS info...")
             time.sleep(1.0)
-        phone_number = '+8801760440736'
         if gps_pos:
             stat = sms_c.send_sms(
                 phone_number=phone_number,
@@ -52,7 +53,6 @@ while True:
                 print("sms sent")
             else:
                 print("sms failed")
-        wait_time = 60000
         print("Waiting a few minutes......")
         for w in tqdm(range(wait_time)):
             if ser_.inWaiting():
