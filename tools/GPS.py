@@ -61,8 +61,10 @@ class GPS:
         long_min = gps_data[2].replace(long_deg, '')
         lat = float(lat_deg) + float(lat_min)/60
         long = float(long_deg) + float(long_min)/60
-        lat_t = f'{self.truncate(lat, 7)}{gps_data[1]}'
-        long_t = f'{self.truncate(long, 7)}{gps_data[3]}'
+        # lat_t = f'{self.truncate(lat, 7)}{gps_data[1]}'
+        # long_t = f'{self.truncate(long, 7)}{gps_data[3]}'
+        lat_t = f'{self.truncate(lat, 7)}'
+        long_t = f'{self.truncate(long, 7)}'
         return [lat_t, long_t]
 
 

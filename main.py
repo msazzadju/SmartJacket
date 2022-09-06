@@ -47,7 +47,7 @@ while True:
         if gps_pos:
             stat = sms_c.send_sms(
                 phone_number=phone_number,
-                text_message=f"latitude: {gps_pos[0]}, longitude: {gps_pos[1]}"
+                text_message=f"{gps_pos[0]}, {gps_pos[1]}"
             )
             if stat:
                 print("sms sent")
