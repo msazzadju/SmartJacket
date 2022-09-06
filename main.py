@@ -14,6 +14,9 @@ camera_stop_cmd = ""
 ser_ = serial.Serial('COM5', 115200)
 ser_.flushInput()
 
+print("Initializing...")
+time.sleep(60)
+
 while True:
     sms_c = SMS(ser=ser_)
     print("Waiting...")
