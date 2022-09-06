@@ -1,16 +1,38 @@
-# This is a sample Python script.
+from tools.SMS import SMS
+from tools.GPS import GPS
+import serial
+import time
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+match_str = "**start_gps_camera**"
+ser_ = serial.Serial('COM5', 115200)
+ser_.flushInput()
+sms_c = SMS(ser=ser_)
+print("Waiting...")
+sms_c.rcv_live_sms()
+while True:
+    if ser_.inWaiting():
+        time.sleep(0.01)
+        rec_buff = ser_.read(ser_.inWaiting())
+        if rec_buff != '':
+            if match_str in rec_buff.decode():
+                break
+print("Resume...")
 
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
-
-
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+gps_c = GPS(ser=ser_)
+gps_c.init_gps()
+gps_pos = gps_c.get_gps_position()
+time.sleep(0.5)
+while not gps_pos:
+    gps_pos = gps_c.get_gps_position()
+    print("Retrying to fetch GPS info...")
+    time.sleep(1.0)
+phone_number = '+8801760440736'
+if gps_pos:
+    stat = sms_c.send_sms(
+        phone_number=phone_number,
+        text_message=f"latitude: {gps_pos[0]}, longitude: {gps_pos[1]}"
+    )
+    if stat:
+        print("sms sent")
+    else:
+        print("sms failed")
