@@ -7,7 +7,7 @@ import os
 
 match_str_start = "**start_gps_camera**"
 match_str_stop = "**stop_gps_camera**"
-phone_number = '+8801760440736'
+phone_number = '+8801521380560'
 wait_time = 60000
 
 camera_start_cmd = ""
